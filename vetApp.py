@@ -79,7 +79,6 @@ def add_user(usuario):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['nombre_usuario']
-            lista_usuarios = crea_lista_usuarios('usuarios.csv')
             return render_template('add_user.html')
         if request.method == 'POST':
             valor = request.form['agregar']
