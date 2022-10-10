@@ -1,6 +1,7 @@
+
 from flask import Flask,flash, render_template,request,redirect,session
 from funciones import *
-#from passlib.hash import sha256_crypt
+from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
 app.secret_key = "asdfvfñfes7u2nairfn"
@@ -70,7 +71,7 @@ def Inicio(usuario=''):
         return render_template('error-404.html')
 
 #Crear nuevo usuario
-@app.route('/add_user/')
+@app.route('/add_user')
 @app.route('/add_user/<usuario>', methods=['GET','POST'])
 def add_user(usuario):
     if request.method == ['GET']:
@@ -82,17 +83,20 @@ def add_user(usuario):
             return render_template('add_user.html')
         if request.method == 'POST':
             valor = request.form['agregar']
-            if valor == 'agregar':
+            if valor == 'Agregar':
                 nombre_usuario = request.form['user']
                 nombre = request.form['nombre']
-                apellido_paterno = request.form['appat']
-                apellido_materno = request.form['apmat']
-                correo_electronico = request.form['mail']
+                appat = request.form['appat']
+                apmat = request.form['apmat']
+                correo = request.form['mail']
                 tipo_usuario = request.form['tipo_usuario']
                 contraseña = request.form['password']
-                if correo_electronico not in diccionario_usuarios:
-                    agregar_usuario(nombre_usuario, nombre, apellido_paterno, apellido_materno, correo_electronico, tipo_usuario, contraseña)
-                    return render_template('inicio.html', usuario)
+                if correo not in diccionario_usuarios:
+                    agregar_usuario(nombre_usuario, nombre, appat, apmat, correo, tipo_usuario, contraseña)
+                    tipo = diccionario_usuarios[usuario]['tipo_usuario']
+                    usuario = diccionario_usuarios[usuario]['nombre_usuario']
+                    menu = crea_menu(tipo,usuario)
+                    return render_template('inicio.html', menu=menu )
 
 
 #Mascotas del cliente
@@ -101,7 +105,7 @@ def add_user(usuario):
 def mascotas(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
-            usuario = diccionario_usuarios[usuario]['usuario']
+            usuario = diccionario_usuarios[usuario]['tipo_usuario']
             lista_mascotas = crea_lista_mascotas('mascotas.csv')
             return render_template('mascotas.html',mascotas = lista_mascotas, usuario = usuario)
         elif request.method == 'POST':
@@ -127,6 +131,11 @@ def AgregarMascota():
             sexo = request.form['sexo']
             Funcion_AgregaMascota(propietario,nombre,raza,sexo)
             return redirect(f"/mascotas/{usuario}")
-    
+
+@app.route('/citas')
+@app.route('/citas/<usuario>', methods = ['GET','POST'])
+def AgendarCita():
+   return render_template('Agendarcita.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
