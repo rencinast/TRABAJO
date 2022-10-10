@@ -22,8 +22,7 @@ def crea_menu(tipo:str,usuario:str)-> dict:
     dadmin['Informes'] = f'/informes/{usuario}'
 
     # Ruteamos cada uno  de los diccionarios
-    dmenus = {
-              'usuario':dusuario,
+    dmenus = {'usuario':dusuario,
               'admin':dadmin}
               
     # Definimos el diccionario correspondiente
