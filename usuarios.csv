@@ -1,7 +1,9 @@
 nombre_usuario,nombre,appat,apmat,correo,tipo_usuario,contraseña
-rencinas,Rodrigo,Encinas,Tapia,rodrix1233@hotmail.com,usuario,rencinas123
-prueba4,sincho,pov,pai,serse@prueba.com,admin,1111111
+BryantB,Bryant,Amaro,Ruiz,bryantb@asd.com,admin,bryant1
+rencinas,Rodrigo,Encinas,Tapia,rodrix1233@hotmail.com,admin,rencinas123
+prueba4,sincho,pov,pai,serse@prueba.com,usuario,1111111
 prueba5,pai,serse,sincho,pov@prueba.com,admin,111111
 test,test,test,test,test@test.com,usuario,test123
 test1,test,test,test,test@test.com,usuario,test123
 Noble 6,Spartan,B,312,b312@unsc.gob,admin,reach
+carlos v,El Rey,del,Chocolate,carlosv@hotmail.com,usuario,test11

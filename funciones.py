@@ -5,11 +5,9 @@ def crea_menu(tipo:str,usuario:str)-> dict:
     ''' Creamos un diccionario para cada usuario dependiendo el tipo (ej. admin) nos regresa el menu con sus respectivos direccionamientos
     '''
     # Creamos el diccionario del cliente
-    dusuario = {'Agregar cita':f'/citas/{usuario}',
-                'Citas anteriores':f'/anteriores/{usuario}',
-                'Mis mascotas':f'/mascotas/{usuario}',
-                'Receta':f'/recetas/{usuario}'}
-
+    dusuario = {'Mascotas':f'/mascotas/{usuario}',
+                'Clientes':f'/clientes/{usuario}'
+            }
     # Creamos el diccionario usuario haciendo una copia del diccionario cliente con 2 valores extra
   #  dusuario = dcliente.copy()
    # dusuario['Receta'] = f'/recetas/{usuario}'
@@ -59,6 +57,19 @@ def crea_lista_mascotas(archivo:str)->list:
     return lista
 
 def crea_lista_usuarios(archivo:str)->list:
+    '''Lee un archivo CSV y regresa una lista
+    '''
+    lista = []
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+    return lista
+
+def crea_lista_clientes(archivo:str)->list:
     '''Lee un archivo CSV y regresa una lista
     '''
     lista = []
@@ -143,6 +154,29 @@ def agregar_usuario(nombre_usuario, nombre, appat, apmat, correo, tipo_usuario, 
                 mascota =[renglon['nombre_usuario'],renglon['nombre'],renglon['appat'],renglon['apmat'],renglon['correo'],renglon['tipo_usuario'],renglon['contraseña']]
                 writer.writerow(mascota)
             writer.writerow([nombre_usuario, nombre, appat, apmat, correo, tipo_usuario, contraseña])
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+
+def agregar_cliente(nombre, appat, apmat, correo):
+    archivo = "clientes.csv"
+    lista = []
+    #obtiene todas los usuarios que estan en el archivo
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    except IOError:
+        print(f"No se pudo leer el arch]ivo {archivo}")
+        #vuelve a agregar todas los usuarios al archivo y al final el usuario nuevo
+    try:
+        with open(archivo,'w',encoding='utf-8', newline="") as fl:
+            writer = csv.writer(fl)
+            writer.writerow(["nombre", "appat", "apmat", "correo"])
+            for renglon in lista:
+                mascota =[renglon['nombre'],renglon['appat'],renglon['apmat'],renglon['correo']]
+                writer.writerow(mascota)
+            writer.writerow([nombre, appat, apmat, correo])
     except IOError:
         print(f"No se pudo leer el archivo {archivo}")
 
