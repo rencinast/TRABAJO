@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = "asdfvfñfes7u2nairfn"
 diccionario_usuarios = lee_diccionario_csv('usuarios.csv')
 lista_mascotas = crea_lista_mascotas('mascotas.csv')
-
+lista_clientes = crea_lista_clientes('clientes.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -97,6 +97,40 @@ def add_user(usuario):
                     menu = crea_menu(tipo,usuario)
                     return render_template('inicio.html', menu=menu )
 
+#Crear nuevo cliente
+@app.route('/AgregarCliente', methods=['GET','POST'])
+def AgregarCliente():
+    if session:
+        usuario = session['usuario']
+        if request.method == 'GET':
+            return render_template('AgregarCliente.html', usuario = usuario)
+        elif request.method == 'POST':
+            nombre = request.form['nombre']
+            appat = request.form['appat']
+            apmat = request.form['apmat']
+            correo = request.form['mail']
+            agregar_cliente(nombre,appat,apmat, correo)
+            return redirect(f"/clientes/{usuario}")
+
+#clientes
+@app.route('/clientes/')
+@app.route('/clientes/<usuario>', methods = ['GET','POST'])
+def clientes(usuario='lista'):
+    if usuario in diccionario_usuarios and session:
+        if request.method == 'GET':
+            usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_clientes = crea_lista_clientes('clientes.csv')
+            return render_template('clientes.html', clientes = lista_clientes, usuario = usuario)
+        elif request.method == 'POST':
+            #se elimina mascota y se refresca pagina
+            propietario = diccionario_usuarios[usuario]['usuario']
+            nombre = request.form['nombre']
+            eliminaMascota(propietario,nombre)
+            lista_clientes = crea_lista_clientes('clientes.csv')
+            return render_template('clientes.html',clientes = lista_clientes, usuario = session['usuario'])
+
+    else:
+        return render_template('error-404.html')
 
 #Mascotas del cliente
 @app.route('/mascotas/')
@@ -117,6 +151,7 @@ def mascotas(usuario='lista'):
 
     else:
         return render_template('error-404.html')
+
 @app.route('/AgregarMascota', methods = ['GET','POST'])
 def AgregarMascota():
     if session:
