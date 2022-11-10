@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Agregar usuarios{% endblock %}
+
+{% block head %}
+{{super()}}
+{% endblock %}
+{% block body %}
+<div>
+    <h2>{{mensaje}}</h2>
+</div>
+<div>
+    <form action='' method='POST'>
+        <div>
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre" value=""><br>
+        </div>
+        <div>
+            <label for="descripcion">Descripcion</label><br>
+            <input type="text" id="descripcion" name="decripcion" value=""><br>
+        </div>
+        </div>
+            <label>Categoria</label><br>
+            <select class="styled" name="categoria" id="categoria">
+                <option value= "Medicamento">Medicamento</option>
+                <option value="Accesorio">Accesorio</option>
+                <option value="Limpieza">Limpieza</option>
+            </select>
+            <div>
+                <label for="precio">Precio</label><br>
+                <input type="text" id="precio" name="precio" value=""><br>
+            </div>
+            <div>
+                <label for="cantidad">Cantidad</label><br>
+                <input type="text" id="cantidad" name="cantidad" value=""><br>       
+        <div>
+            <input type="submit" value="Agregar" name="agregar">
+        </div>
+    </form>
+</div>
+{% endblock %}

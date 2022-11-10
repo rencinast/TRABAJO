@@ -8,6 +8,7 @@ app.secret_key = "asdfvfñfes7u2nairfn"
 diccionario_usuarios = lee_diccionario_csv('usuarios.csv')
 lista_mascotas = crea_lista_mascotas('mascotas.csv')
 lista_clientes = crea_lista_clientes('clientes.csv')
+lista_producto = crea_lista_clientes('productos.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -165,6 +166,42 @@ def AgregarMascota():
             sexo = request.form['sexo']
             Funcion_AgregaMascota(propietario,nombre,raza,sexo)
             return redirect(f"/mascotas/{usuario}")
+
+#Productos
+@app.route('/productos/')
+@app.route('/productos/<usuario>', methods = ['GET','POST'])
+def productos(usuario='lista'):
+    if usuario in diccionario_usuarios and session:
+        if request.method == 'GET':
+            usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_productos = crea_lista_clientes('productos.csv')
+            return render_template('productos.html', clientes = lista_productos, usuario = usuario)
+        elif request.method == 'POST':
+            #se elimina mascota y se refresca pagina
+            propietario = diccionario_usuarios[usuario]['usuario']
+            nombre = request.form['nombre']
+            eliminaMascota(propietario,nombre)
+            lista_clientes = crea_lista_clientes('productos.csv')
+            return render_template('productos.html',clientes = lista_productos, usuario = session['usuario'])
+
+    else:
+        return render_template('error-404.html')
+
+#Crear nuevo cliente
+@app.route('/agregarProducto', methods=['GET','POST'])
+def agregarProducto():
+    if session:
+        usuario = session['usuario']
+        if request.method == 'GET':
+            return render_template('agregarProducto.html', usuario = usuario)
+        elif request.method == 'POST':
+            nombre = request.form['nombre']
+            descripcion = request.form['descripcion']
+            categoria = request.form['categoria']
+            precio = request.form['precio']
+            cantidad = request.form['cantidad']
+            agregar_cliente(nombre, descripcion, categoria, precio, cantidad)
+            return redirect(f"/productos/{usuario}")
 
 @app.route('/citas')
 @app.route('/citas/<usuario>', methods = ['GET','POST'])

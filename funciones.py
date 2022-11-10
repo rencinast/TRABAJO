@@ -17,7 +17,7 @@ def crea_menu(tipo:str,usuario:str)-> dict:
     # Creamos el diccionario admin haciendo una copia del diccionario usuario con 2 valores extra
     dadmin = dusuario.copy()
     dadmin['Agregar Usuarios'] = f'/add_user/{usuario}'
-    dadmin['Informes'] = f'/informes/{usuario}'
+    dadmin['Productos'] = f'/productos/{usuario}'
 
     # Ruteamos cada uno  de los diccionarios
     dmenus = {'usuario':dusuario,
