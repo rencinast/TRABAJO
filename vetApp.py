@@ -8,7 +8,7 @@ app.secret_key = "asdfvfñfes7u2nairfn"
 diccionario_usuarios = lee_diccionario_csv('usuarios.csv')
 lista_mascotas = crea_lista_mascotas('mascotas.csv')
 lista_clientes = crea_lista_clientes('clientes.csv')
-lista_producto = crea_lista_clientes('productos.csv')
+lista_productos = crea_lista_clientes('productos.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -181,8 +181,8 @@ def productos(usuario='lista'):
             propietario = diccionario_usuarios[usuario]['usuario']
             nombre = request.form['nombre']
             eliminaMascota(propietario,nombre)
-            lista_clientes = crea_lista_clientes('productos.csv')
-            return render_template('productos.html',clientes = lista_productos, usuario = session['usuario'])
+            lista_productos = crea_lista_clientes('productos.csv')
+            return render_template('productos.html',productos = lista_productos, usuario = session['usuario'])
 
     else:
         return render_template('error-404.html')
@@ -200,7 +200,7 @@ def agregarProducto():
             categoria = request.form['categoria']
             precio = request.form['precio']
             cantidad = request.form['cantidad']
-            agregar_cliente(nombre, descripcion, categoria, precio, cantidad)
+            agregar_producto(nombre, descripcion, categoria, precio, cantidad)
             return redirect(f"/productos/{usuario}")
 
 @app.route('/citas')
