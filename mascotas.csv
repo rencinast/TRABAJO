@@ -1,8 +1,2 @@
-propietario,nombre,raza,sexo
-felipe,spooge,poodle,macho
-elpatoninja,panda,chihuahua,macho
-asdf,panda,shitzu,macho
-asdf,spooge,poodle,macho
-rencinas,Bogitos,Callejero,macho
-rencinas,gato,gato,macho
-rencinas,Saul,Humano,macho
+nombre,tipoAnimal,raza,color,peso,altura
+Kiwi,Gato,Callejero,Atrigrado con blanco,1.5kg,25cm

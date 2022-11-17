@@ -160,11 +160,13 @@ def AgregarMascota():
         if request.method == 'GET':
             return render_template('AgregarMascota.html', usuario = usuario )
         elif request.method == 'POST':
-            propietario = usuario
             nombre = request.form['nombre']
+            tipoAnimal = request.form['tipoAnimal']
             raza = request.form['raza']
-            sexo = request.form['sexo']
-            Funcion_AgregaMascota(propietario,nombre,raza,sexo)
+            color = request.form['color']
+            peso = request.form['peso']
+            altura = request.form['altura']
+            Funcion_AgregaMascota(nombre, tipoAnimal, raza, color, peso, altura)
             return redirect(f"/mascotas/{usuario}")
 
 #Productos
@@ -209,4 +211,6 @@ def AgendarCita():
    return render_template('Agendarcita.html')
 
 if __name__ == "__main__":
+    crea_lista_clientes('clientes.csv')
     app.run(debug=True)
+    

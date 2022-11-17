@@ -5,7 +5,7 @@
 {% endblock %}
 {% block body %}
 <div>
-    <h1>Agrega a tu mascota</h1>
+    <h1>Agregar mascota</h1>
     <h2>{{mensaje}}</h2>
 </div>
 <div>
@@ -15,22 +15,32 @@
             <input type="text" id="nombre" name="nombre" value=""><br>
         </div>
         <div>
+            <label for="tipoAnimal">Tipo de animal:</label><br>
+            <input type="text" id="tipoAnimal" name="tipoAnimal" value=""><br>
+        </div>
+        <div>
             <label for="raza">Raza:</label><br>
             <input type="text" id="raza" name="raza" value=""><br>
         </div>
-            <label>Sexo:</label><br>
-            <input type="checkbox" id="macho" name="macho" value="macho" onchange="obtenSexo(this)">
-            <label for="macho">Macho</label><br>
-
-            <input type="checkbox" id="hembra" name="hembra" value="hembra" onchange="obtenSexo(this)">
-            <label for="hembra">Hembra</label><br>
-
-            <input type="text" id="sexo" name="sexo" value="">
+        <div>
+            <label for="color">Color del pelaje o piel:</label><br>
+            <input type="text" id="color" name="color" value=""><br>
+        </div>
+        <div>
+            <label for="peso">Peso:</label><br>
+            <input type="text" id="peso" name="peso" value=""><br>
+        </div>
+        <div>
+            <label for="altura">Altura:</label><br>
+            <input type="text" id="altura" name="altura" value=""><br>
+        </div>
+        <div>
             <input type="submit" value="Agregar" name="agregar">
+        </div>
     </form>
 
-    <script>
-
+  <script>
+/*
         function obtenSexo(check){
             //si uno esta checked, el otro no....se actualiza el valor de sexo
             var sexo = ""
@@ -46,7 +56,7 @@
             }
             sexo = check.value
             document.getElementById("sexo").value = sexo
-        }
+        */
     </script>
 </div>
 {% endblock %}
