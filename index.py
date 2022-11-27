@@ -1,5 +1,8 @@
 from http.server import BaseHTTPRequestHandler
+from flask import Flask
 from cowpy import cow
+
+app = Flask(__name__)
 
 class handler(BaseHTTPRequestHandler):
 
