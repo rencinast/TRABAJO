@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Agendar cita{% endblock %}
+
+{% block head %}
+<link href="css/mobiscroll.javascript.min.css" rel="stylesheet" />
+<script src="js/mobiscroll.javascript.min.js">
+mobiscroll.datepicker('#input-picker', {
+    controls: ['calendar'],
+    touchUi: false
+});
+</script>
+{{super()}}
+{% endblock %}
+{% block body %}
+<div>
+    <div>
+        <h1>Aendar cita</h1>
+        <h2>{{mensaje}}</h2>
+    </div>
+</div>
+<div>
+    <form action='' method='POST'>
+        <div>
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre">
+        </div>
+        <div>
+            <label for="apellido">Apellido:</label><br>
+            <input type="text" id="apellido" name="apellido">
+        </div>
+        <div>
+            <label for="nombre_masc">Nombre de la mascota:</label><br>
+            <input type="text" id="nombre_masc" name="nombre_masc">
+        </div>  
+        <div>
+            <label for="dia">día:</label><br>
+            <input type="date" id="dia" name="dia">
+        </div>
+        <div>
+            <label for="hora">Hora:</label><br>
+            <input type="time" id="hora" name="hora">
+        </div>
+        </div>
+        <div>
+            <input type="submit" value="Agregar" name="agregar">
+            
+        </div>
+    </form>
+
+    
+</div>
+{% endblock %}

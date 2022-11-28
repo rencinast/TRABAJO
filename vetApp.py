@@ -9,6 +9,7 @@ diccionario_usuarios = lee_diccionario_csv('usuarios.csv')
 lista_mascotas = crea_lista_mascotas('mascotas.csv')
 lista_clientes = crea_lista_clientes('clientes.csv')
 lista_productos = crea_lista_clientes('productos.csv')
+lista_citas = crea_lista_clientes('citas.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -205,12 +206,38 @@ def agregarProducto():
             agregar_producto(nombre, descripcion, categoria, precio, cantidad)
             return redirect(f"/productos/{usuario}")
 
-@app.route('/citas')
+@app.route('/citas', methods = ['GET','POST'])
 @app.route('/citas/<usuario>', methods = ['GET','POST'])
-def AgendarCita():
-   return render_template('Agendarcita.html')
+def citas(usuario='lista'):
+    if usuario in diccionario_usuarios and session:
+        if request.method == 'GET':
+            usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_citas = crea_lista_clientes('citas.csv')
+            return render_template('citas.html', cita = lista_citas, usuario = usuario)
+        elif request.method == 'POST':
+            #se elimina mascota y se refresca pagina
+            propietario = diccionario_usuarios[usuario]['usuario']
+            nombre = request.form['nombre']
+            eliminaMascota(propietario,nombre)
+            lista_citas = crea_lista_clientes('citas.csv')
+            return render_template('citas.html',cita = lista_citas, usuario = session['usuario'])
+        
+#Crear nuevo cliente
+@app.route('/agendar_cita', methods=['GET','POST'])
+def agendarCita():
+    if session:
+        usuario = session['usuario']
+        if request.method == 'GET':
+            return render_template('agendar_cita.html', usuario = usuario)
+        elif request.method == 'POST':
+            nombre = request.form['nombre']
+            apellido = request.form['apellido']
+            nombre_mascota = request.form['nombre_masc']
+            dia = request.form['dia']
+            hora = request.form['hora']
+            agendar_cita(nombre, apellido, nombre_mascota, dia, hora)
+            return redirect(f"/citas/{usuario}")
 
 if __name__ == "__main__":
-    crea_lista_clientes('clientes.csv')
     app.run(debug=True)
     

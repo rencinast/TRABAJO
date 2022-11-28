@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Citas{% endblock %}
+{% block head %}
+{{super()}}
+{% endblock %}
+{% block body %}
+    
+<h1>Listado de citas</h1>
+    <table class="table table-info table-striped" id="clientes">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido paterno</th>
+                <th scope="col">Apellido materno</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                {% if cliente.nombre == usuario%}
+               
+                    <tr>
+                        <th scope="row" id="{{clientes.nombre}}">{{clientes.nombre}} </th>
+                        <td id="{{clientes.nombre}}"> {{clientes.nombre}}</td>
+                        <td> {{ clientes.appat }} </td>
+                        <td> {{ clientes.apmat }}</td>
+                        <td> {{ clientes.correo }}</td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleteRow(this)" id="botEliminar" value="{{clientes.nombre}}">Eliminar</button><br> </td> 
+                    </tr>
+                        
+                {% endif %}               
+            {% endfor %}
+            <!-- los inputs del form son invisibles, se toma el nombre del propietario y de la mascota para identificar la fila-->
+            <form action='' method='POST'>
+                <input type="hidden" name="propietario" id="propietario" value= "">
+                <input type="hidden" name="nombre" id ="nombre" value= "">
+                <input type="submit" type="hidden" name="submit" value="subir" id="botSubmit" >
+            </form>
+            <a href="/agendar_cita" class="btn btn-primary">Agendar cita</a>
+            
+        </tbody>
+    </table>
+    <script>
+        function deleteRow(r){
+            var fila = r.value
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("nombre").value = fila
+            document.getElementById('botSubmit').click();
+            
+            document.getElementById("TablaClientes").deleteRow(i)
+
+        }
+    </script>
+{% endblock %}

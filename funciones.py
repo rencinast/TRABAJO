@@ -18,6 +18,7 @@ def crea_menu(tipo:str,usuario:str)-> dict:
     dadmin = dusuario.copy()
     dadmin['Agregar Usuarios'] = f'/add_user/{usuario}'
     dadmin['Productos'] = f'/productos/{usuario}'
+    dadmin['Agendar cita'] = f'/citas/{usuario}'
 
     # Ruteamos cada uno  de los diccionarios
     dmenus = {'usuario':dusuario,
@@ -57,6 +58,32 @@ def crea_lista_mascotas(archivo:str)->list:
     return lista
 
 def crea_lista_usuarios(archivo:str)->list:
+    '''Lee un archivo CSV y regresa una lista
+    '''
+    lista = []
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+    return lista
+
+def crea_lista_mascotas(archivo:str)->list:
+    '''Lee un archivo CSV y regresa una lista
+    '''
+    lista = []
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+    return lista
+
+def crea_lista_citas(archivo:str)->list:
     '''Lee un archivo CSV y regresa una lista
     '''
     lista = []
@@ -134,6 +161,30 @@ def Funcion_AgregaMascota(nombre, tipoAnimal, raza, color, peso, altura):
     except IOError:
         print(f"No se pudo leer el archivo {archivo}")
 
+def agendar_cita(nombre, apellido, nombre_mascota, dia, hora):
+    archivo = "citas.csv"
+    lista = []
+    #obtiene todas las mascotas que estan en el archivo
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    
+    except IOError:
+        print(f"No se pudo leer el arch]ivo {archivo}")
+        #vuelve a agregar todas las mascotas al archivo y al final la nueva mascota
+    try:
+        with open(archivo,'w',encoding='utf-8', newline="") as fl:
+            writer = csv.writer(fl)
+            writer.writerow(["nombre", "apellido", "nombre_mascota", "dia", "hora"])
+            for renglon in lista:
+                cita =[renglon['nombre'],renglon['apellido'],renglon['nombre_mascota'],renglon['dia'],renglon['hora']]
+                writer.writerow(cita)
+            writer.writerow([nombre, apellido, nombre_mascota, dia, hora])
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+
 def agregar_cliente(nombre,appat,apmat, correo):
     archivo = "clientes.csv"
     lista = []
@@ -154,7 +205,7 @@ def agregar_cliente(nombre,appat,apmat, correo):
             for renglon in lista:
                 cliente =[renglon['nombre'],renglon['appat'],renglon['apmat'],renglon['correo']]
                 writer.writerow(cliente)
-            writer.writerow([nombre,appat,apmat, correo])
+            writer.writerow([nombre,appat, apmat, correo])
     except IOError:
         print(f"No se pudo leer el archivo {archivo}")
 
