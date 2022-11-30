@@ -241,6 +241,30 @@ def agregar_producto(nombre, descripcion, categoria, precio, cantidad):
     except IOError:
         print(f"No se pudo leer el archivo {archivo}")
 
+def agregar_recetas(nombre,raza,propietario,descripcion):
+    archivo = "recetas.csv"
+    lista = []
+    #obtiene todas los usuarios que estan en el archivo
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    except IOError:
+        print(f"No se pudo leer el arch]ivo {archivo}")
+        #vuelve a agregar todas los usuarios al archivo y al final el usuario nuevo
+    try:
+        with open(archivo,'w',encoding='utf-8', newline="") as fl:
+            writer = csv.writer(fl)
+            writer.writerow(["nombre", "raza", "propietario", "descripcion"])
+            for renglon in lista:
+                producto =[renglon['nombre'],renglon['raza'],renglon['propietario'],renglon['descripcion']]
+                writer.writerow(producto)
+            writer.writerow([nombre,raza,propietario,descripcion])
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+
+
 def read_file(file:str)->list:
     list= []
     try:

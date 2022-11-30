@@ -6,10 +6,11 @@ from passlib.hash import sha256_crypt
 app = Flask(__name__)
 app.secret_key = "asdfvfñfes7u2nairfn"
 diccionario_usuarios = lee_diccionario_csv('usuarios.csv')
-lista_mascotas = crea_lista_mascotas('mascotas.csv')
-lista_clientes = crea_lista_clientes('clientes.csv')
-lista_productos = crea_lista_clientes('productos.csv')
-lista_citas = crea_lista_clientes('citas.csv')
+lista_mascotas = crea_lista('mascotas.csv')
+lista_clientes = crea_lista('clientes.csv')
+lista_productos = crea_lista('productos.csv')
+lista_citas = crea_lista('citas.csv')
+lista_recetas = crea_lista('recetas.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -67,8 +68,7 @@ def Inicio(usuario=''):
             usuario = diccionario_usuarios[usuario]['nombre_usuario']
             menu = crea_menu(tipo,usuario)
             print(menu)
-            return render_template('inicio.html', menu=menu)
-
+            return render_template('Inicio.html', menu=menu, usuario = session['usuario'])
     else:
         return render_template('error-404.html')
 
@@ -239,21 +239,31 @@ def agendarCita():
             hora = request.form['hora']
             agendar_cita(nombre, apellido, nombre_mascota, dia, hora)
             return redirect(f"/citas/{usuario}")
+            
+
+@app.route('/recetas/')
+@app.route('/recetas/<usuario>', methods = ['GET','POST'])
+def recetas(usuario='lista'):
+    if usuario in diccionario_usuarios and session:
+        if request.method == 'GET':
+            usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            return render_template('recetas.html', recetas = lista_recetas, usuario = usuario)
+    else:
+        return render_template('error-404.html')
 
 @app.route('/AgregaReceta',methods=['GET','POST'])
-def recetas(usuario='lista'):
+def AgregaRecetas(usuario='lista'):
   if session:
         usuario = session['usuario']
         if request.method == 'GET':
             return render_template('AgregaReceta.html', usuario = usuario)
         elif request.method == 'POST':
             nombre = request.form['nombre']
+            raza = request.form['raza']
+            propietario = request.form['propietario']
             descripcion = request.form['descripcion']
-            categoria = request.form['categoria']
-            precio = request.form['precio']
-            cantidad = request.form['cantidad']
-            agregar_producto(nombre, descripcion, categoria, precio, cantidad)
-            return redirect(f"/AgregaReceta/{usuario}")
+            agregar_recetas(nombre,raza,propietario,descripcion)
+            return redirect(f"/recetas/{usuario}")
 
 if __name__ == "__main__":
     app.run(debug=True)

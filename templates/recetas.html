@@ -4,15 +4,44 @@
 {{super()}}
 {% endblock %}
 {% block body %}
-<h1>Creacion de recetas</h1>
-<table class="table table-info table-striped" id="recetas">
-    <thead>
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">raza</th>
-            <th scope="col">sexo</th>
-            <th scope="col">propietario</th>
-            <th scope="col">descripcion</th>
-        </tr>
-    </thead>
+
+<h1>Listado de recetas</h1>
+    <table class="table table-info table-striped" id="tablaRecetas">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Raza</th>
+                <th scope="col">Propietario</th>
+                <th scope="col">Descripcion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for receta in recetas %}
+                    <tr>
+                        <td> {{ receta.nombre }} </td>
+                        <td> {{ receta.raza }}</td>
+                        <td> {{ receta.propietario }}</td>
+                        <td> {{ receta.descripcion }}</td>
+                    </tr>         
+            {% endfor %}
+            <!-- los inputs del form son invisibles, se toma el nombre del propietario y de la mascota para identificar la fila-->
+            <form action='' method='POST'>
+                <input type="hidden" name="propietario" id="propietario" value= "">
+                <input type="hidden" name="nombre" id ="nombre" value= "">
+                <input type="submit" type="hidden" name="submit" value="subir" id="botSubmit" >
+            </form>
+            <a href="/AgregaReceta" class ="btn btn-sec">Agregar Receta</a>
+            
+        </tbody>
+    </table>
+    <script>
+        function deleteRow(r){
+            var fila = r.value
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("nombre").value = fila
+            document.getElementById('botSubmit').click();
+            document.getElementById("tablaRecetas").deleteRow(i)
+
+        }
+    </script>
 {% endblock %}
