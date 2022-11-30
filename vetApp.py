@@ -61,14 +61,19 @@ def logout():
 #Inicio o vista del usuario
 @app.route('/inicio/')
 @app.route('/inicio/<usuario>', methods = ['GET'])
-def Inicio(usuario=''):
+def mainPage(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             tipo = diccionario_usuarios[usuario]['tipo_usuario']
             usuario = diccionario_usuarios[usuario]['nombre_usuario']
             menu = crea_menu(tipo,usuario)
             print(menu)
+<<<<<<< Updated upstream
             return render_template('Inicio.html', menu=menu, usuario = session['usuario'])
+=======
+            return render_template('mainPage.html', menu=menu)
+
+>>>>>>> Stashed changes
     else:
         return render_template('error-404.html')
 
@@ -80,6 +85,8 @@ def usuarios(usuario='lista'):
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
             return render_template('usuarios2.html', usuarios = lista_usuarios, usuario = usuario)
+        else:
+            return render_template('error-404.html')
 
 #agregar usuario
 @app.route('/add_user', methods=['GET','POST'])
@@ -107,6 +114,8 @@ def clientes(usuario='lista'):
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
             return render_template('clientes.html', clientes = lista_clientes, usuario = usuario)
+        else:
+            return render_template('error-404.html')
 
 
 #agregar cliente
@@ -121,7 +130,8 @@ def AgregarCliente():
             appat = request.form['appat']
             apmat = request.form['apmat']
             correo = request.form['mail']
-            agregar_cliente(nombre,appat,apmat, correo)
+            telefono = request.form['telefono']
+            agregar_cliente(nombre,appat,apmat, correo, telefono)
             return redirect(f"/clientes/{usuario}")
 
 #template mascotas
@@ -132,9 +142,8 @@ def mascotas(usuario='lista'):
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
             return render_template('mascotas.html',mascotas = lista_mascotas, usuario = usuario)
-
-    else:
-        return render_template('error-404.html')
+        else:
+            return render_template('error-404.html')
 #agregar mascota
 @app.route('/AgregarMascota', methods = ['GET','POST'])
 def AgregarMascota():
@@ -161,7 +170,8 @@ def productos(usuario='lista'):
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
             return render_template('productos.html', productos = lista_productos, usuario = usuario)
-
+        else:
+            return render_template('error-404.html')
 
 #Crear nuevo cliente
 @app.route('/agregarProducto', methods=['GET','POST'])
@@ -187,7 +197,8 @@ def citas(usuario='lista'):
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
             return render_template('citas.html', citas = lista_citas,  usuario = usuario)
-        
+        else:
+            return render_template('error-404.html')   
 #agregar cita
 @app.route('/agendar_cita', methods=['GET','POST'])
 def agendarCita():
