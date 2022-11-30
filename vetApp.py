@@ -6,11 +6,10 @@ from passlib.hash import sha256_crypt
 app = Flask(__name__)
 app.secret_key = "asdfvfñfes7u2nairfn"
 diccionario_usuarios = lee_diccionario_csv('usuarios.csv')
-lista_mascotas = crea_lista('mascotas.csv')
-lista_clientes = crea_lista('clientes.csv')
-lista_productos = crea_lista('productos.csv')
-lista_citas = crea_lista('citas.csv')
-lista_usuarios = crea_lista('usuarios.csv')
+lista_mascotas = crea_lista_mascotas('mascotas.csv')
+lista_clientes = crea_lista_clientes('clientes.csv')
+lista_productos = crea_lista_clientes('productos.csv')
+lista_citas = crea_lista_clientes('citas.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -204,6 +203,21 @@ def agendarCita():
             hora = request.form['hora']
             agendar_cita(nombre, apellido, nombre_mascota, dia, hora)
             return redirect(f"/citas/{usuario}")
+
+@app.route('/AgregaReceta',methods=['GET','POST'])
+def recetas(usuario='lista'):
+  if session:
+        usuario = session['usuario']
+        if request.method == 'GET':
+            return render_template('AgregaReceta.html', usuario = usuario)
+        elif request.method == 'POST':
+            nombre = request.form['nombre']
+            descripcion = request.form['descripcion']
+            categoria = request.form['categoria']
+            precio = request.form['precio']
+            cantidad = request.form['cantidad']
+            agregar_producto(nombre, descripcion, categoria, precio, cantidad)
+            return redirect(f"/AgregaReceta/{usuario}")
 
 if __name__ == "__main__":
     app.run(debug=True)

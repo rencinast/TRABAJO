@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}AgregaRecetas{% endblock %}
+{% block head %}
+{{super()}}
+{% endblock %}
+{% block body %}
+<div>
+    <h1>Agrega Receta</h1>
+    <h2>{{mensaje}}</h2>
+</div>
+<div>
+    <form action='' method='POST'>
+        <div>
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre" value=""><br>
+        </div>
+        <div>
+            <label for="raza">Raza:</label><br>
+            <input type="text" id="raza" name="raza" value=""><br>
+        </div>
+        <div>
+            <label for="propietario">Propietario:</label><br>
+            <input type="text" id="propietario" name="propietario" value=""><br>
+        </div>
+        <div>
+            <label for="descripcion">Descripcion de la receta:</label><br>
+            <textarea type="text" id="descripcion" name="descripcion" rows="10" cols="50" value=""></textarea><br>
+        </div>
+        <div>
+            <input type="submit" value="Agregar" name="agregar">
+        </div>
+    </form>
+</div>
+{% endblock %}
