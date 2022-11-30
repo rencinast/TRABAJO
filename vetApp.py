@@ -6,10 +6,11 @@ from passlib.hash import sha256_crypt
 app = Flask(__name__)
 app.secret_key = "asdfvfñfes7u2nairfn"
 diccionario_usuarios = lee_diccionario_csv('usuarios.csv')
-lista_mascotas = crea_lista_mascotas('mascotas.csv')
-lista_clientes = crea_lista_clientes('clientes.csv')
-lista_productos = crea_lista_clientes('productos.csv')
-lista_citas = crea_lista_clientes('citas.csv')
+lista_mascotas = crea_lista('mascotas.csv')
+lista_clientes = crea_lista('clientes.csv')
+lista_productos = crea_lista('productos.csv')
+lista_citas = crea_lista('citas.csv')
+lista_usuarios = crea_lista('usuarios.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
