@@ -68,12 +68,7 @@ def mainPage(usuario='lista'):
             usuario = diccionario_usuarios[usuario]['nombre_usuario']
             menu = crea_menu(tipo,usuario)
             print(menu)
-<<<<<<< Updated upstream
-            return render_template('Inicio.html', menu=menu, usuario = session['usuario'])
-=======
             return render_template('mainPage.html', menu=menu)
-
->>>>>>> Stashed changes
     else:
         return render_template('error-404.html')
 
