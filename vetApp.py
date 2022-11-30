@@ -88,7 +88,7 @@ def AgregarUsuario():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('add_user.html', usuarios = lista_usuarios, usuario = session)
+            return render_template('add_user.html', usuario = session)
         elif request.method == 'POST':
             user = request.form['user']
             nombre = request.form['nombre']
@@ -116,7 +116,7 @@ def AgregarCliente():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('AgregarCliente.html', clientes = lista_clientes, usuario = usuario)
+            return render_template('AgregarCliente.html', usuario = usuario)
         elif request.method == 'POST':
             nombre = request.form['nombre']
             appat = request.form['appat']
@@ -142,7 +142,7 @@ def AgregarMascota():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('AgregarMascota.html', mascotas = lista_mascotas, usuario = usuario )
+            return render_template('AgregarMascota.html', usuario = usuario )
         elif request.method == 'POST':
             dueño = request.form['dueño']
             nombre = request.form['nombre']
@@ -170,7 +170,7 @@ def agregarProducto():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('agregarProducto.html', productos = lista_productos, usuario = usuario)
+            return render_template('agregarProducto.html', usuario = usuario)
         elif request.method == 'POST':
             nombre = request.form['nombre']
             descripcion = request.form['descripcion']
@@ -195,7 +195,7 @@ def agendarCita():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('agendar_cita.html', citas = lista_citas, usuario = usuario)
+            return render_template('agendar_cita.html', usuario = usuario)
         elif request.method == 'POST':
             nombre = request.form['nombre']
             apellido = request.form['apellido']
