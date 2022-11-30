@@ -16,7 +16,7 @@ def crea_menu(tipo:str,usuario:str)-> dict:
 
     # Creamos el diccionario admin haciendo una copia del diccionario usuario con 2 valores extra
     dadmin = dusuario.copy()
-    dadmin['Agregar Usuarios'] = f'/add_user/{usuario}'
+    dadmin['usuarios'] = f'/usuarios2/{usuario}'
     dadmin['Productos'] = f'/productos/{usuario}'
     dadmin['Agendar cita'] = f'/citas/{usuario}'
 
@@ -109,6 +109,32 @@ def crea_lista_clientes(archivo:str)->list:
         print(f"No se pudo leer el archivo {archivo}")
     return lista
 
+def crea_lista_producto(archivo:str)->list:
+    '''Lee un archivo CSV y regresa una lista
+    '''
+    lista = []
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+    return lista
+
+def crea_lista_usuarios(archivo:str)->list:
+    '''Lee un archivo CSV y regresa una lista
+    '''
+    lista = []
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+    return lista
+
 def eliminaMascota(propietario:str,nombre:str):
     '''re escribe el csv sin la fila que se elimino'''
     archivo = "mascotas.csv"
@@ -137,7 +163,7 @@ def eliminaMascota(propietario:str,nombre:str):
     except IOError:
         print(f"No se pudo leer el archivo {archivo}")
 
-def Funcion_AgregaMascota(nombre, tipoAnimal, raza, color, peso, altura):
+def Funcion_AgregaMascota(dueño, nombre, tipoAnimal, raza, color, peso, altura):
     archivo = "mascotas.csv"
     lista = []
     #obtiene todas las mascotas que estan en el archivo
@@ -153,11 +179,11 @@ def Funcion_AgregaMascota(nombre, tipoAnimal, raza, color, peso, altura):
     try:
         with open(archivo,'w',encoding='utf-8', newline="") as fl:
             writer = csv.writer(fl)
-            writer.writerow(["nombre", "tipoAnimal", "raza", "color", "peso", "altura"])
+            writer.writerow(["dueño", "nombre", "tipoAnimal", "raza", "color", "peso", "altura"])
             for renglon in lista:
-                mascota =[renglon['nombre'],renglon['tipoAnimal'],renglon['raza'],renglon['color'],renglon['peso'],renglon['altura']]
+                mascota =[renglon['dueño'], renglon['nombre'],renglon['tipoAnimal'],renglon['raza'],renglon['color'],renglon['peso'],renglon['altura']]
                 writer.writerow(mascota)
-            writer.writerow([nombre, tipoAnimal, raza, color, peso, altura])
+            writer.writerow([dueño, nombre, tipoAnimal, raza, color, peso, altura])
     except IOError:
         print(f"No se pudo leer el archivo {archivo}")
 

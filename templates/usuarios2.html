@@ -1,36 +1,39 @@
 {% extends "base.html" %}
-{% block title %}clientes{% endblock %}
+{% block title %}Usuarios{% endblock %}
 {% block head %}
 {{super()}}
 {% endblock %}
 {% block body %}
     
-<h1>Listado de clientes</h1>
-    <table class="table table-info table-striped" id="tablaClientes">
+<h1>Listado de usuarios</h1>
+    <table class="table table-info table-striped" id="tablaUsuarios">
         <thead>
             <tr>
+                <th scope="col">Nombre de usuario</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Apellido paterno</th>
                 <th scope="col">Apellido materno</th>
+                <th scope="col">Apellido paterno</th>
                 <th scope="col">Correo</th>
+                <th scope="col">Tipo de usuario</th>
             </tr>
         </thead>
         <tbody>
-            {% for cliente in clientes %}
+            {% for usuario in usuarios%}
                 <tr>
-                    <td> {{ cliente.Nombre }} </td>
-                    <td> {{ cliente.appat }} </td>
-                    <td> {{ cliente.apmat }} </td>
-                    <td> {{ cliente.correo }}</td>
-                </tr>        
+                    <td> {{ usuario.nombre_usuario }} </td>
+                    <td> {{ usuario.nombre }}</td>
+                    <td> {{ usuario.appat }}</td>
+                    <td> {{ usuario.apmat }}</td>
+                    <td> {{ usuario.correo }}</td>
+                    <td> {{ usuario.tipo_usuario }}</td>
+                </tr>                  
             {% endfor %}
-            <!-- los inputs del form son invisibles, se toma el nombre del propietario y de la mascota para identificar la fila-->
             <form action='' method='POST'>
                 <input type="hidden" name="propietario" id="propietario" value= "">
                 <input type="hidden" name="nombre" id ="nombre" value= "">
                 <input type="submit" type="hidden" name="submit" value="subir" id="botSubmit" >
             </form>
-            <a href="/AgregarCliente" class="btn btn-primary">Agregar cliente</a>
+            <a href="/add_user" class="btn btn-primary">Agregar usuario</a>
             
         </tbody>
     </table>
@@ -41,7 +44,7 @@
             document.getElementById("nombre").value = fila
             document.getElementById('botSubmit').click();
             
-            document.getElementById("tablaClientes").deleteRow(i)
+            document.getElementById("tablaCitas").deleteRow(i)
 
         }
     </script>

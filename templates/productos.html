@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block title %}clientes{% endblock %}
+{% block title %}productos{% endblock %}
 {% block head %}
 {{super()}}
 {% endblock %}
 {% block body %}
     
-<h1>Listado de clientes</h1>
-    <table class="table table-info table-striped" id="clientes">
+<h1>Listado de productos</h1>
+    <table class="table table-info table-striped" id="tablaproductos">
         <thead>
             <tr>
                 <th scope="col">Nombre</th>
@@ -18,18 +18,13 @@
         </thead>
         <tbody>
             {% for producto in productos %}
-                {% if producto.nombre == usuario%}
-               
-                    <tr>
-                        <th scope="row" id="{{clientes.nombre}}">{{productos.nombre}} </th>
-                        <td id="{{clientes.nombre}}"> {{clientes.nombre}}</td>
-                        <td> {{ clientes.appat }} </td>
-                        <td> {{ clientes.apmat }}</td>
-                        <td> {{ clientes.correo }}</td>
-                        <td><button type="button" class="btn btn-danger" onclick="deleteRow(this)" id="botEliminar" value="{{clientes.nombre}}">Eliminar</button><br> </td> 
-                    </tr>
-                        
-                {% endif %}               
+                <tr>
+                    <td> {{ producto.nombre }} </td>
+                    <td> {{ producto.descripcion }}</td>
+                    <td> {{ producto.categoria }}</td>
+                    <td> {{ producto.precio }}</td>
+                    <td> {{ producto.cantidad }}</td>
+                </tr>      
             {% endfor %}
             <!-- los inputs del form son invisibles, se toma el nombre del propietario y de la mascota para identificar la fila-->
             <form action='' method='POST'>
@@ -48,7 +43,7 @@
             document.getElementById("nombre").value = fila
             document.getElementById('botSubmit').click();
             
-            document.getElementById("TablaClientes").deleteRow(i)
+            document.getElementById("tablaProductos").deleteRow(i)
 
         }
     </script>
