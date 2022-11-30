@@ -9,26 +9,27 @@
     <table class="table table-info table-striped" id="tablaMascotas">
         <thead>
             <tr>
-                <th scope="col">propietario</th>
-                <th scope="col">nombre</th>
-                <th scope="col">raza</th>
-                <th scope="col">sexo</th>
-                <th scope="col">eliminar</th>
+                <th scope="col">Dueño</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Tipo de animal</th>
+                <th scope="col">Raza</th>
+                <th scope="col">Color</th>
+                <th scope="col">Peso</th>
+                <th scope="col">Altura</th>
             </tr>
         </thead>
         <tbody>
             {% for mascota in mascotas %}
-                {% if mascota.propietario == usuario%}
-               
                     <tr>
-                        <th scope="row" id="{{mascota.propietario}}">{{mascota.propietario}} </th>
-                        <td id="{{mascota.nombre}}"> {{mascota.nombre}}</td>
-                        <td> {{ mascota.raza }} </td>
-                        <td> {{ mascota.sexo }}</td>
-                        <td><button type="button" class="btn btn-danger" onclick="deleteRow(this)" id="botEliminar" value="{{mascota.nombre}}">Eliminar</button><br> </td> 
-                    </tr>
-                        
-                {% endif %}               
+                        <td> {{ mascota.dueño }} </td>
+                        <td> {{ mascota.nombre }} </td>
+                        <td> {{ mascota.tipoAnimal }}</td>
+                        <td> {{ mascota.raza }}</td>
+                        <td> {{ mascota.color }}</td>
+                        <td> {{ mascota.peso }}</td>
+                        <td> {{ mascota.altura }}</td>
+                        <!-- <td><button type="button" class="btn btn-danger" onclick="deleteRow(this)" id="botEliminar" value="{{mascota.dueño}}">Eliminar</button><br> </td> -->
+                    </tr>         
             {% endfor %}
             <!-- los inputs del form son invisibles, se toma el nombre del propietario y de la mascota para identificar la fila-->
             <form action='' method='POST'>

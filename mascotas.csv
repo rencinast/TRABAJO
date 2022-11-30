@@ -1,2 +1,3 @@
-nombre,tipoAnimal,raza,color,peso,altura
-Kiwi,Gato,Callejero,Atrigrado con blanco,1.5kg,25cm
+dueño,nombre,tipoAnimal,raza,color,peso,altura
+Rodrigo,Kiwi,Gato,Callejero,Atrigrado con blanco,1.5kg,25cm
+Rodrigo,Tigrilla,Gato,Mestizo,Atigrado,.5kg,15cm

@@ -6,30 +6,25 @@
 {% block body %}
     
 <h1>Listado de citas</h1>
-    <table class="table table-info table-striped" id="clientes">
+    <table class="table table-info table-striped" id="tablaCitas">
         <thead>
             <tr>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido paterno</th>
-                <th scope="col">Apellido materno</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Eliminar</th>
+                <th scope="col">Nombre de mascota</th>
+                <th scope="col">dia</th>
+                <th scope="col">Hora</th>
             </tr>
         </thead>
         <tbody>
-            {% for cliente in clientes %}
-                {% if cliente.nombre == usuario%}
-               
-                    <tr>
-                        <th scope="row" id="{{clientes.nombre}}">{{clientes.nombre}} </th>
-                        <td id="{{clientes.nombre}}"> {{clientes.nombre}}</td>
-                        <td> {{ clientes.appat }} </td>
-                        <td> {{ clientes.apmat }}</td>
-                        <td> {{ clientes.correo }}</td>
-                        <td><button type="button" class="btn btn-danger" onclick="deleteRow(this)" id="botEliminar" value="{{clientes.nombre}}">Eliminar</button><br> </td> 
-                    </tr>
-                        
-                {% endif %}               
+            {% for cita in citas%}
+                <tr>
+                    <td> {{ cita.nombre }} </td>
+                    <td> {{ cita.apellido }}</td>
+                    <td> {{ cita.nombre_mascota }}</td>
+                    <td> {{ cita.dia }}</td>
+                    <td> {{ cita.hora }}</td>
+                </tr>                  
             {% endfor %}
             <!-- los inputs del form son invisibles, se toma el nombre del propietario y de la mascota para identificar la fila-->
             <form action='' method='POST'>
@@ -48,7 +43,7 @@
             document.getElementById("nombre").value = fila
             document.getElementById('botSubmit').click();
             
-            document.getElementById("TablaClientes").deleteRow(i)
+            document.getElementById("tablaCitas").deleteRow(i)
 
         }
     </script>
