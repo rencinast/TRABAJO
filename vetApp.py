@@ -72,32 +72,22 @@ def Inicio(usuario=''):
     else:
         return render_template('error-404.html')
 
-#Crear nuevo usuario
+#template usuarios
 @app.route('/usuarios2/')
 @app.route('/usuarios2/<usuario>', methods = ['GET','POST'])
 def usuarios(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_usuarios = crea_lista('usuarios.csv')
             return render_template('usuarios2.html', usuarios = lista_usuarios, usuario = usuario)
-        elif request.method == 'POST':
-            #se elimina mascota y se refresca pagina
-            propietario = diccionario_usuarios[usuario]['usuario']
-            nombre = request.form['nombre']
-            eliminaMascota(propietario,nombre)
-            lista_clientes = crea_lista('clientes.csv')
-            return render_template('usuarios2.html', usuarios = lista_usuarios, usuario = session['usuario'])
 
-    else:
-        return render_template('error-404.html')
-#Crear nuevo usuario
+#agregar usuario
 @app.route('/add_user', methods=['GET','POST'])
 def AgregarUsuario():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('add_user.html', usuarios = lista_usuarios, usuario = session)
+            return render_template('add_user.html', usuario = session)
         elif request.method == 'POST':
             user = request.form['user']
             nombre = request.form['nombre']
@@ -109,33 +99,23 @@ def AgregarUsuario():
             agregar_usuario(user, nombre,appat,apmat, mail, tipo_usuario, password)
             return redirect(f"/usuarios2/{usuario}")
 
-#clientes
+#template clientes
 @app.route('/clientes/')
 @app.route('/clientes/<usuario>', methods = ['GET','POST'])
 def clientes(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_clientes = crea_lista('clientes.csv')
             return render_template('clientes.html', clientes = lista_clientes, usuario = usuario)
-        elif request.method == 'POST':
-            #se elimina mascota y se refresca pagina
-            propietario = diccionario_usuarios[usuario]['usuario']
-            nombre = request.form['nombre']
-            eliminaMascota(propietario,nombre)
-            lista_clientes = crea_lista('clientes.csv')
-            return render_template('clientes.html', clientes = lista_clientes, usuario = session['usuario'])
 
-    else:
-        return render_template('error-404.html')
 
-#Crear nuevo cliente
+#agregar cliente
 @app.route('/AgregarCliente', methods=['GET','POST'])
 def AgregarCliente():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('AgregarCliente.html', clientes = lista_clientes, usuario = usuario)
+            return render_template('AgregarCliente.html', usuario = usuario)
         elif request.method == 'POST':
             nombre = request.form['nombre']
             appat = request.form['appat']
@@ -144,32 +124,24 @@ def AgregarCliente():
             agregar_cliente(nombre,appat,apmat, correo)
             return redirect(f"/clientes/{usuario}")
 
-#Mascotas del cliente
+#template mascotas
 @app.route('/mascotas/')
 @app.route('/mascotas/<usuario>', methods = ['GET','POST'])
 def mascotas(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_mascotas = crea_lista('mascotas.csv')
             return render_template('mascotas.html',mascotas = lista_mascotas, usuario = usuario)
-        elif request.method == 'POST':
-            #se elimina mascota y se refresca pagina
-            propietario = diccionario_usuarios[usuario]['usuario']
-            nombre = request.form['nombre']
-            eliminaMascota(propietario,nombre)
-            lista_mascotas = crea_lista('mascotas.csv')
-            return render_template('mascotas.html',mascotas = lista_mascotas, usuario = session['usuario'])
 
     else:
         return render_template('error-404.html')
-
+#agregar mascota
 @app.route('/AgregarMascota', methods = ['GET','POST'])
 def AgregarMascota():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('AgregarMascota.html', mascotas = lista_mascotas, usuario = usuario )
+            return render_template('AgregarMascota.html', usuario = usuario )
         elif request.method == 'POST':
             dueño = request.form['dueño']
             nombre = request.form['nombre']
@@ -181,14 +153,13 @@ def AgregarMascota():
             Funcion_AgregaMascota(dueño, nombre, tipoAnimal, raza, color, peso, altura)
             return redirect(f"/mascotas/{usuario}")
 
-#Productos
+#template
 @app.route('/productos/')
 @app.route('/productos/<usuario>', methods = ['GET','POST'])
 def productos(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_productos = crea_lista('productos.csv')
             return render_template('productos.html', productos = lista_productos, usuario = usuario)
 
 
@@ -198,7 +169,7 @@ def agregarProducto():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('agregarProducto.html', productos = lista_productos, usuario = usuario)
+            return render_template('agregarProducto.html', usuario = usuario)
         elif request.method == 'POST':
             nombre = request.form['nombre']
             descripcion = request.form['descripcion']
@@ -208,29 +179,22 @@ def agregarProducto():
             agregar_producto(nombre, descripcion, categoria, precio, cantidad)
             return redirect(f"/productos/{usuario}")
 
+#template citas
 @app.route('/citas', methods = ['GET','POST'])
 @app.route('/citas/<usuario>', methods = ['GET','POST'])
 def citas(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_citas = crea_lista('citas.csv')
             return render_template('citas.html', citas = lista_citas,  usuario = usuario)
-        elif request.method == 'POST':
-            #se elimina mascota y se refresca pagina
-            propietario = diccionario_usuarios[usuario]['usuario']
-            nombre = request.form['nombre']
-            eliminaMascota(propietario,nombre)
-            lista_citas = crea_lista('citas.csv')
-            return render_template('citas.html',citas = lista_citas, usuario = session['usuario'])
         
-#Crear nuevo cliente
+#agregar cita
 @app.route('/agendar_cita', methods=['GET','POST'])
 def agendarCita():
     if session:
         usuario = session['usuario']
         if request.method == 'GET':
-            return render_template('agendar_cita.html', citas = lista_citas, usuario = usuario)
+            return render_template('agendar_cita.html', usuario = usuario)
         elif request.method == 'POST':
             nombre = request.form['nombre']
             apellido = request.form['apellido']
