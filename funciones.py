@@ -109,6 +109,19 @@ def crea_lista_clientes(archivo:str)->list:
         print(f"No se pudo leer el archivo {archivo}")
     return lista
 
+def crea_lista_recetas(archivo:str)->list:
+    '''Lee un archivo CSV y regresa una lista
+    '''
+    lista = []
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+    return lista
+
 def eliminaMascota(propietario:str,nombre:str):
     '''re escribe el csv sin la fila que se elimino'''
     archivo = "mascotas.csv"
