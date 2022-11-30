@@ -6,11 +6,11 @@ from passlib.hash import sha256_crypt
 app = Flask(__name__)
 app.secret_key = "asdfvfñfes7u2nairfn"
 diccionario_usuarios = lee_diccionario_csv('usuarios.csv')
-lista_mascotas = crea_lista_mascotas('mascotas.csv')
-lista_clientes = crea_lista_clientes('clientes.csv')
-lista_productos = crea_lista_producto('productos.csv')
-lista_citas = crea_lista_citas('citas.csv')
-lista_usuarios = crea_lista_usuarios('usuarios.csv')
+lista_mascotas = crea_lista('mascotas.csv')
+lista_clientes = crea_lista('clientes.csv')
+lista_productos = crea_lista('productos.csv')
+lista_citas = crea_lista('citas.csv')
+lista_usuarios = crea_lista('usuarios.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -80,14 +80,14 @@ def usuarios(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_usuarios = crea_lista_usuarios('usuarios.csv')
+            lista_usuarios = crea_lista('usuarios.csv')
             return render_template('usuarios2.html', usuarios = lista_usuarios, usuario = usuario)
         elif request.method == 'POST':
             #se elimina mascota y se refresca pagina
             propietario = diccionario_usuarios[usuario]['usuario']
             nombre = request.form['nombre']
             eliminaMascota(propietario,nombre)
-            lista_clientes = crea_lista_clientes('clientes.csv')
+            lista_clientes = crea_lista('clientes.csv')
             return render_template('usuarios2.html', usuarios = lista_usuarios, usuario = session['usuario'])
 
     else:
@@ -100,12 +100,35 @@ def AgregarUsuario():
         if request.method == 'GET':
             return render_template('add_user.html', usuarios = lista_usuarios, usuario = session)
         elif request.method == 'POST':
+            user = request.form['user']
             nombre = request.form['nombre']
             appat = request.form['appat']
             apmat = request.form['apmat']
-            correo = request.form['mail']
-            agregar_cliente(nombre,appat,apmat, correo)
-            return redirect(f"/usuario2/{usuario}")
+            mail = request.form['mail']
+            tipo_usuario = request.form['tipo_usuario']
+            password = request.form['password']
+            agregar_usuario(user, nombre,appat,apmat, mail, tipo_usuario, password)
+            return redirect(f"/usuarios2/{usuario}")
+
+#clientes
+@app.route('/clientes/')
+@app.route('/clientes/<usuario>', methods = ['GET','POST'])
+def clientes(usuario='lista'):
+    if usuario in diccionario_usuarios and session:
+        if request.method == 'GET':
+            usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_clientes = crea_lista('clientes.csv')
+            return render_template('clientes.html', clientes = lista_clientes, usuario = usuario)
+        elif request.method == 'POST':
+            #se elimina mascota y se refresca pagina
+            propietario = diccionario_usuarios[usuario]['usuario']
+            nombre = request.form['nombre']
+            eliminaMascota(propietario,nombre)
+            lista_clientes = crea_lista('clientes.csv')
+            return render_template('clientes.html', clientes = lista_clientes, usuario = session['usuario'])
+
+    else:
+        return render_template('error-404.html')
 
 #Crear nuevo cliente
 @app.route('/AgregarCliente', methods=['GET','POST'])
@@ -122,26 +145,6 @@ def AgregarCliente():
             agregar_cliente(nombre,appat,apmat, correo)
             return redirect(f"/clientes/{usuario}")
 
-#clientes
-@app.route('/clientes/')
-@app.route('/clientes/<usuario>', methods = ['GET','POST'])
-def clientes(usuario='lista'):
-    if usuario in diccionario_usuarios and session:
-        if request.method == 'GET':
-            usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_clientes = crea_lista_clientes('clientes.csv')
-            return render_template('clientes.html', clientes = lista_clientes, usuario = usuario)
-        elif request.method == 'POST':
-            #se elimina mascota y se refresca pagina
-            propietario = diccionario_usuarios[usuario]['usuario']
-            nombre = request.form['nombre']
-            eliminaMascota(propietario,nombre)
-            lista_clientes = crea_lista_clientes('clientes.csv')
-            return render_template('clientes.html', clientes = lista_clientes, usuario = session['usuario'])
-
-    else:
-        return render_template('error-404.html')
-
 #Mascotas del cliente
 @app.route('/mascotas/')
 @app.route('/mascotas/<usuario>', methods = ['GET','POST'])
@@ -149,14 +152,14 @@ def mascotas(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_mascotas = crea_lista_mascotas('mascotas.csv')
+            lista_mascotas = crea_lista('mascotas.csv')
             return render_template('mascotas.html',mascotas = lista_mascotas, usuario = usuario)
         elif request.method == 'POST':
             #se elimina mascota y se refresca pagina
             propietario = diccionario_usuarios[usuario]['usuario']
             nombre = request.form['nombre']
             eliminaMascota(propietario,nombre)
-            lista_mascotas = crea_lista_mascotas('mascotas.csv')
+            lista_mascotas = crea_lista('mascotas.csv')
             return render_template('mascotas.html',mascotas = lista_mascotas, usuario = session['usuario'])
 
     else:
@@ -186,7 +189,7 @@ def productos(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_productos = crea_lista_producto('productos.csv')
+            lista_productos = crea_lista('productos.csv')
             return render_template('productos.html', productos = lista_productos, usuario = usuario)
 
 
@@ -212,14 +215,14 @@ def citas(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
-            lista_citas = crea_lista_citas('citas.csv')
+            lista_citas = crea_lista('citas.csv')
             return render_template('citas.html', citas = lista_citas,  usuario = usuario)
         elif request.method == 'POST':
             #se elimina mascota y se refresca pagina
             propietario = diccionario_usuarios[usuario]['usuario']
             nombre = request.form['nombre']
             eliminaMascota(propietario,nombre)
-            lista_citas = crea_lista_clientes('citas.csv')
+            lista_citas = crea_lista('citas.csv')
             return render_template('citas.html',citas = lista_citas, usuario = session['usuario'])
         
 #Crear nuevo cliente

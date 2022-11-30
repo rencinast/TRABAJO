@@ -16,9 +16,10 @@ def crea_menu(tipo:str,usuario:str)-> dict:
 
     # Creamos el diccionario admin haciendo una copia del diccionario usuario con 2 valores extra
     dadmin = dusuario.copy()
-    dadmin['usuarios'] = f'/usuarios2/{usuario}'
+    dadmin['Usuarios'] = f'/usuarios2/{usuario}'
     dadmin['Productos'] = f'/productos/{usuario}'
-    dadmin['Agendar cita'] = f'/citas/{usuario}'
+    dadmin['Citas'] = f'/citas/{usuario}'
+    dadmin['Recetas'] = f'/recetas/{usuario}'
 
     # Ruteamos cada uno  de los diccionarios
     dmenus = {'usuario':dusuario,
@@ -44,85 +45,7 @@ def lee_diccionario_csv(archivo:str)->list:
         print(f"No se pudo leer el archivo {archivo}")
     return diccionario
 
-def crea_lista_mascotas(archivo:str)->list:
-    '''Lee un archivo CSV y regresa una lista
-    '''
-    lista = []
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.DictReader(fh)
-            for renglon in csv_reader:
-                lista.append(renglon)
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
-    return lista
-
-def crea_lista_usuarios(archivo:str)->list:
-    '''Lee un archivo CSV y regresa una lista
-    '''
-    lista = []
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.DictReader(fh)
-            for renglon in csv_reader:
-                lista.append(renglon)
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
-    return lista
-
-def crea_lista_mascotas(archivo:str)->list:
-    '''Lee un archivo CSV y regresa una lista
-    '''
-    lista = []
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.DictReader(fh)
-            for renglon in csv_reader:
-                lista.append(renglon)
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
-    return lista
-
-def crea_lista_citas(archivo:str)->list:
-    '''Lee un archivo CSV y regresa una lista
-    '''
-    lista = []
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.DictReader(fh)
-            for renglon in csv_reader:
-                lista.append(renglon)
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
-    return lista
-
-def crea_lista_clientes(archivo:str)->list:
-    '''Lee un archivo CSV y regresa una lista
-    '''
-    lista = []
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.DictReader(fh)
-            for renglon in csv_reader:
-                lista.append(renglon)
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
-    return lista
-
-def crea_lista_producto(archivo:str)->list:
-    '''Lee un archivo CSV y regresa una lista
-    '''
-    lista = []
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.DictReader(fh)
-            for renglon in csv_reader:
-                lista.append(renglon)
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
-    return lista
-
-def crea_lista_usuarios(archivo:str)->list:
+def crea_lista(archivo:str)->list:
     '''Lee un archivo CSV y regresa una lista
     '''
     lista = []
@@ -184,6 +107,30 @@ def Funcion_AgregaMascota(dueño, nombre, tipoAnimal, raza, color, peso, altura)
                 mascota =[renglon['dueño'], renglon['nombre'],renglon['tipoAnimal'],renglon['raza'],renglon['color'],renglon['peso'],renglon['altura']]
                 writer.writerow(mascota)
             writer.writerow([dueño, nombre, tipoAnimal, raza, color, peso, altura])
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+
+def agregar_usuario(user, nombre, appat, apmat, mail, tipo_usuario, password):
+    archivo = "usuarios.csv"
+    lista = []
+    #obtiene todas las mascotas que estan en el archivo
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                lista.append(renglon)
+    
+    except IOError:
+        print(f"No se pudo leer el arch]ivo {archivo}")
+        #vuelve a agregar todas las mascotas al archivo y al final la nueva mascota
+    try:
+        with open(archivo,'w',encoding='utf-8', newline="") as fl:
+            writer = csv.writer(fl)
+            writer.writerow(["user", "nombre", "appat", "apmat", "mail", "tipo_usuario", "password"])
+            for renglon in lista:
+                cita =[renglon['user'],renglon['nombre'],renglon['appat'],renglon['apmat'],renglon['mail'],renglon['tipo_usuario'],renglon['password']]
+                writer.writerow(cita)
+            writer.writerow([user, nombre, appat, apmat, mail, tipo_usuario, password])
     except IOError:
         print(f"No se pudo leer el archivo {archivo}")
 
