@@ -109,6 +109,7 @@ def clientes(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_clientes = crea_lista('clientes.csv')
             return render_template('clientes.html', clientes = lista_clientes, usuario = usuario)
         else:
             return render_template('error-404.html')
@@ -137,6 +138,7 @@ def mascotas(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_mascotas = crea_lista('mascotas.csv')
             return render_template('mascotas.html',mascotas = lista_mascotas, usuario = usuario)
         else:
             return render_template('error-404.html')
