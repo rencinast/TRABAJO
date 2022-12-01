@@ -11,6 +11,7 @@ lista_clientes = crea_lista('clientes.csv')
 lista_productos = crea_lista('productos.csv')
 lista_citas = crea_lista('citas.csv')
 lista_recetas = crea_lista('recetas.csv')
+lista_usuarios = crea_lista('usuarios.csv')
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -26,7 +27,7 @@ def login():
             usuario = request.form['usuario']
             #print(diccionario_usuarios)
             if usuario in diccionario_usuarios:
-                password_db = diccionario_usuarios[usuario]['contraseña'] # password guardado
+                password_db = diccionario_usuarios[usuario]['password'] # password guardado
                 password_forma = request.form['password'] #password presentado
                 #verificado = sha256_crypt.verify(password_forma,password_db)
                 if (password_db == password_forma):
@@ -65,7 +66,7 @@ def mainPage(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             tipo = diccionario_usuarios[usuario]['tipo_usuario']
-            usuario = diccionario_usuarios[usuario]['nombre_usuario']
+            usuario = diccionario_usuarios[usuario]['user']
             menu = crea_menu(tipo,usuario)
             print(menu)
             return render_template('mainPage.html', menu=menu)
