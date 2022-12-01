@@ -6,7 +6,9 @@ def crea_menu(tipo:str,usuario:str)-> dict:
     '''
     # Creamos el diccionario del cliente
     dusuario = {'Mascotas':f'/mascotas/{usuario}',
-                'Clientes':f'/clientes/{usuario}'
+                'Clientes':f'/clientes/{usuario}',
+                'Citas':f'/citas/{usuario}',
+                'Recetas':f'/recetas/{usuario}',
             }
     # Creamos el diccionario usuario haciendo una copia del diccionario cliente con 2 valores extra
   #  dusuario = dcliente.copy()
@@ -18,8 +20,8 @@ def crea_menu(tipo:str,usuario:str)-> dict:
     dadmin = dusuario.copy()
     dadmin['Usuarios'] = f'/usuarios2/{usuario}'
     dadmin['Productos'] = f'/productos/{usuario}'
-    dadmin['Citas'] = f'/citas/{usuario}'
-    dadmin['Recetas'] = f'/recetas/{usuario}'
+    dadmin['Reportes'] = f'/reportes/{usuario}'
+    
 
     # Ruteamos cada uno  de los diccionarios
     dmenus = {'usuario':dusuario,

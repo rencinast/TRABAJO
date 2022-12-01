@@ -1,5 +1,5 @@
 
-from flask import Flask,flash, render_template,request,redirect,session
+from flask import Flask,flash, render_template,request,redirect,session, Response, send_file, make_response
 from funciones import *
 from passlib.hash import sha256_crypt
 
@@ -80,6 +80,7 @@ def usuarios(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_usuarios = crea_lista('usuarios.csv')
             return render_template('usuarios2.html', usuarios = lista_usuarios, usuario = usuario)
         else:
             return render_template('error-404.html')
@@ -127,8 +128,7 @@ def AgregarCliente():
             appat = request.form['appat']
             apmat = request.form['apmat']
             correo = request.form['mail']
-            telefono = request.form['telefono']
-            agregar_cliente(nombre,appat,apmat, correo, telefono)
+            agregar_cliente(nombre,appat,apmat, correo)
             return redirect(f"/clientes/{usuario}")
 
 #template mascotas
@@ -167,6 +167,7 @@ def productos(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_productos = crea_lista('productos.csv')
             return render_template('productos.html', productos = lista_productos, usuario = usuario)
         else:
             return render_template('error-404.html')
@@ -194,6 +195,7 @@ def citas(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_citas = crea_lista('citas.csv')
             return render_template('citas.html', citas = lista_citas,  usuario = usuario)
         else:
             return render_template('error-404.html')   
@@ -220,6 +222,7 @@ def recetas(usuario='lista'):
     if usuario in diccionario_usuarios and session:
         if request.method == 'GET':
             usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            lista_recetas = crea_lista('recetas.csv')
             return render_template('recetas.html', recetas = lista_recetas, usuario = usuario)
     else:
         return render_template('error-404.html')
@@ -238,6 +241,23 @@ def AgregaRecetas(usuario='lista'):
             agregar_recetas(nombre,raza,propietario,descripcion)
             return redirect(f"/recetas/{usuario}")
 
+#template reportes
+@app.route('/reportes/')
+@app.route('/reportes/<usuario>', methods = ['GET','POST'])
+def reportes(usuario='lista'):
+    if usuario in diccionario_usuarios and session:
+        if request.method == 'GET':
+            usuario = diccionario_usuarios[usuario]['tipo_usuario']
+            if request.method == 'POST':
+                value = request.form['descargar']
+                if value == 'Descargar':
+                    valor = request.form['tipo_reporte']
+                    return send_file('outputs/'+valor+'.csv', mimetype='text/csv', attachment_filename= +valor+'.csv', as_attachment=True)
+
+            return render_template('reportes.html')
+        else:
+            return render_template('error-404.html')
+    
 if __name__ == "__main__":
     app.run(debug=True)
     

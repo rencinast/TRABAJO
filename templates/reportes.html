@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Reportes{% endblock %}
+{% block head %}
+{{super()}}
+{% endblock %}
+{% block body %}
+    
+<h1>Reportes</h1>
+
+<form action="" method="POST">
+    <label>Tipo de reporte</label>
+    <select for="tipo_reporte" class="styled" name="tipo_reporte" id="tipo_reporte">
+        <option value="admin">usuarios</option>
+        <option value="clientes">clientes</option>
+        <option value="mascotas">mascotas</option>
+        <option value="recetas">recetas</option>
+        <option value="productos">productos</option>
+        <option value="citas">citas</option>
+    </select>
+    <div>
+        <input type="submit" value="Descargar" name="descargar">
+    </div>
+</form>
+
+
+
+    
+{% endblock %}
